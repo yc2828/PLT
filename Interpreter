@@ -1,0 +1,106 @@
+Interpreter
+
+CORE
+==========
+FORWARD
+BACKWARD
+
+LEFT (turn)
+RIGHT
+
+PLUS  //are we using symbols or words?
+MINUS
+MULTIPLY
+DIVIDE
+
+REPEAT (iteration)
+FOREVER
+CS (?)
+
+HOME/ORIGIN
+
+PRINT
+SPEED
+
+TELEPART (distance?)
+GPS (?)
+
+SHOW_TURTLE
+HIDE_TURTLE
+
+WRAP/FENCE (?)
+
+PEN_UP
+PEN_DOWN
+
+SET(?)
+
+==========
+LOGIC
+==========
+AND
+OR
+NOT
+
+IF
+IFELSE
+WHEN
+UNLESS
+UNTIL
+
+FOR
+WHILE
+
+GREATER
+LESS
+EQUAL
+GE (greater and equal)
+LE (less and equal)
+NE (not equal)
+
+==========
+ARITHMETIC
+==========
+
+POWER
+SQUARE_ROOT/ROOT
+EXP
+LOG (base?)
+
+SIN
+COS
+TAN //more?
+
+MOD
+ROUND
+
+CEILING
+FLOOR
+
+RANDOM (0-9)
+
+==========
+COLORFUL
+==========
+
+COLOR (?)
+RGBCOLOR (?)
+SETCOLOR (RED/ GREEN/ BLUE)
+
+PENUP
+PENDOWN
+FILL
+
+==========
+??
+==========
+
+INTERSECT
+RETURN
+
+==========
+CHALLENGE
+==========
+
+FINISH
+
