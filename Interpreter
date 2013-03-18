@@ -15,14 +15,14 @@ DIVIDE
 
 REPEAT (iteration)
 FOREVER
-CS (?)
+Clearscreen/CS
 
 HOME/ORIGIN
 
 PRINT
 SPEED
 
-TELEPART (distance?)
+TELEPORT (distance?)
 GPS (?)
 
 SHOW_TURTLE
