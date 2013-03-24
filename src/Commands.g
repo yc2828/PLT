@@ -17,5 +17,5 @@ Number
     ;
 
 WS  
-    :   (' ' | '\t' | '\r'| '\n') //{$channel=HIDDEN;}
+    :   (' ' | '\t' | '\r'| '\n') -> skip
     ;
