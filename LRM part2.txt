@@ -1,0 +1,35 @@
+Language reference manual part 2
+6.	Statements
+Statements are executed in sequence. Statements are executed for their effect, and do not have values.
+Statement:
+Command-statement
+Expression-statement
+Conditional-statement
+Iteration-statement
+6.1.	Common statements
+In Logo++, most statements are command statements.
+	Command-statement:
+	Command expressionopt
+All effects of command statements are completed before the next statement is executed. The requirement of the expression depends on the command. A missing expression for commands that requires an argument would result in missing-expression syntax error.
+6.2.	Expression-statements
+Expression statements are mostly variable assignment, function calls. Variable declaration is also a type of function call.
+	Expression-statement:
+	expressionopt;
+6.3.	Conditional statements
+Conditional statements are if-else statements. Dangling else is associated to the closest if.
+	Conditional statement:
+	If (expression) statement
+	If (expression) statement else statement
+The expression must have numeric type. If the expression unequals to 0, the statement right after is executed. Otherwise, the second statement is executed only if the second form is present.
+6.4.	Iteration statements
+Iteration statements specify looping.
+	Iteration-statement:
+	Repeat expression [statement]
+	While (expression) statement
+	For (expressionopt; expressionopt; expressionopt) statement
+In the repeat statement, the substatement is executed the number of expression times. Expression here must have an integer value.
+In the while statement, the substatement is executed as long as the expression unequal to 0.
+In the for statement, the first expression is evaluated before the first iteration for initialization purpose. The substatement is executed as long as the second expression, evaluated before each iteration, unequal 0. The third expression is evaluated after each iteration. All expressions are optional, missing second statement would equivalent to testing a non-zero element.
+7.	Grammar
+The following is a summary of the grammar that was defined throughout this manual:
+
