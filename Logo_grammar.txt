@@ -1,0 +1,247 @@
+%token IDENTIFIER CONSTANT STRING_LITERAL
+%token LE_OP GE_OP EQ_OP NE_OP
+%token IF ELSE WHILE FOR BREAK RETURN END 
+
+primary_expression
+        : IDENTIFIER                  
+        | CONSTANT    
+        | STRING_LITERAL        
+        | expression
+        | command_expression
+        ;
+
+/* ----------------------- command expression ------------------------ */
+command_expression_statement
+        : command_expression eostmt
+        ;
+
+command_expression
+        : command command_expression
+        | command_with_expression command_expression
+        |
+        ;
+
+command
+        : getx
+        | gety 
+        | getxy
+        | origin
+        | showturtle
+        | hideturtle
+        | wrap
+        | fence
+        | penup
+        | pendown
+        | clearscreen
+        ;
+
+command_with_expression
+        : command_additive additive_expression
+        | command_string STRING_LITERAL
+        ;
+
+command_additive
+        : forward
+        | back
+        | left
+        | right
+        | setx
+        | sety
+        | setxy
+        ;
+
+command_string
+        : print
+        ;
+
+forward
+    :   c = 'FORWARD'
+    |   c = 'FD'
+    ;
+
+back
+    :   c = 'BACK'
+    |   c = 'BK'
+    ;
+
+left
+    :   c = 'LEFT'
+    |   c = 'LT'
+    ;
+
+right
+    :   c = 'RIGHT'
+    |   c = 'RT'
+    ;
+
+
+setx
+    :   c = 'SETX'
+    ;
+
+sety
+    :   c = 'SETY'
+    ;
+
+setxy
+    :   c = 'SETXY'
+    |   c = 'TELEPORT'
+    ;
+
+getx
+    :   c = 'GETX'
+    ;
+
+gety
+    :   c = 'GETY'
+    ;
+
+getxy
+    :   c = 'GETXY'
+    |   c = 'GPS'
+    ;
+
+speed
+    :   c = 'SPEED'
+    ;
+
+print
+    :   c = 'PRINT'
+    ;
+
+clearscreen
+    :   c = 'CLEARSCREEN'
+    |   c = 'CS'
+    ;
+
+origin
+    :   c = 'ORIGIN'
+    |   c = 'HOME'
+    ;
+
+showturtle
+    :   c = 'SHOW_TURTLE'
+    |   c = 'ST'
+    ;
+
+hideturtle
+    :   c = 'HIDE_TURTLE'
+    |   c = 'HT'
+    ;
+
+wrap
+    :   c = 'WRAP'
+    ;
+
+fence
+    :   c = 'FENCE'
+    ;
+
+penup
+    :   c = 'PEN_UP'
+    |   c = 'PU'
+    ;
+
+pendown
+    :   c = 'PEN_DOWN'
+    |   c = 'PD'
+    ;
+
+/* ----------------------- additive expression ------------------------ */
+
+unary_expression
+        : primary_expression
+        | unary_operator primary_expression
+        ;
+
+unary_operator
+        : '-'
+        | '!'
+        ;
+
+multiplicative_expression
+        : unary_expression
+        | multiplicative_expression '*' unary_expression
+        | multiplicative_expression '/' unary_expression
+        | multiplicative_expression '\\' unary_expression
+        | multiplicative_expression '^' unary_expression
+        ;
+
+additive_expression
+        : multiplicative_expression
+        | additive_expression '+' multiplicative_expression
+        | additive_expression '-' multiplicative_expression
+        ;
+
+/* ----------------------- relational expression ------------------------ */
+
+relational_expression
+        : additive_expression
+        | relational_expression '<' additive_expression
+        | relational_expression '>' additive_expression
+        | relational_expression LE_OP additive_expression
+        | relational_expression GE_OP additive_expression
+        ;
+
+equality_expression
+        : relational_expression
+        | equality_expression EQ_OP relational_expression
+        | equality_expression NE_OP relational_expression
+        ;
+
+and_expression
+        : equality_expression
+        | and_expression '&' equality_expression
+        ;
+
+or_expression
+        : and_expression
+        | or_expression '|' and_expression
+        ;
+
+expression
+       : or_expression
+	   | expression ':' or_expression
+	   ;
+
+assignment_expression
+        : 'SET' IDENTIFIER '=' expression
+
+eostmt
+        :  ';'
+        ;
+
+/* -----------------------  statement ------------------------ */
+
+statement
+        : assignment_statement
+        | expression_statement
+        | selection_statement
+        | iteration_statement
+        | command_expression_statement
+        ;
+
+statement_list
+        : statement
+        | statement_list statement
+        ;
+
+expression_statement
+        : eostmt
+        | expression eostmt
+        ;
+
+assignment_statement
+        : assignment_expression eostmt
+        ;
+ 
+selection_statement
+        : IF expression statement_list END eostmt
+        | IF expression statement_list ELSE statement_list END eostmt
+        ;
+	
+iteration_statement
+        : WHILE expression statement_list END eostmt
+        | FOR IDENTIFIER '=' expression statement_list END eostmt
+        | FOR '(' IDENTIFIER '=' expression ')' statement_list END eostmt 
+        ;
