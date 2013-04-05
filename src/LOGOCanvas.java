@@ -8,7 +8,12 @@ public class LOGOCanvas extends JComponent {
 	final static public int DEFAULT_HEIGHT = 500;
 	
 	public LOGOTurtle turtle;
+	// 04-05-13 update:
+	public boolean wrap;
+	public int[][] bitmap;
+	// ........................
 	
+
 	public LOGOCanvas(String str) {
 		turtle = new LOGOTurtle((double)DEFAULT_WIDTH / 2, (double)DEFAULT_HEIGHT / 2);
 		if (str != null)

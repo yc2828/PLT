@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import java.util.*;
 
 public class LOGOPP extends JFrame {
 	public static void main(String[] args) {
@@ -12,7 +13,10 @@ public class LOGOPP extends JFrame {
 	static LOGOErrorHandler errorhandler = new LOGOErrorHandler(io);
 	static LOGOCanvas canvas = new LOGOCanvas("LOGO++");
 	static LOGOInterpreter interpreter = new LOGOInterpreter();
-	
+	// 04-05-13 update:
+	static HashMap<String, Object> variableTable = new HashMap<String, Object>();
+	//TODO:static HashMap<String, LOGOFunc> functionTable = new HashMap<String, LOGOFunc>();
+			
 	public LOGOPP() {
 		add("Center", canvas);
 		setSize(canvas.DEFAULT_WIDTH,canvas.DEFAULT_HEIGHT);

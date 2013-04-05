@@ -10,7 +10,11 @@ public class LOGOTurtle{
 	private double angle = -90;
 	private ArrayList<LOGOCommand> commandList = new ArrayList<LOGOCommand>();
 	private ArrayList<TurtleStatus> history = new ArrayList<TurtleStatus>();
-	
+	// 04-05-13 update:
+	private double speed;
+	private boolean penDown;
+	//......................(TODO: color penSize)
+
 	LOGOTurtle() {
 		addHistory();
 	}
