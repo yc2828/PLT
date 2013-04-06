@@ -40,10 +40,11 @@ public class LOGOPP extends JFrame {
 	public void execute(String str) {
 		errorhandler.reset();
 		try {
-			interpreter.runOneLine(str, canvas.turtle);
+			LOGONode root = interpreter.parse(str);
+			root.run(errorhandler);
 		}
 		catch (Exception e) {
-			errorhandler.set(e);
+			errorhandler.set(e.toString());
 		}
 	}
 }

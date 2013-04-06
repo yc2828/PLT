@@ -21,10 +21,6 @@ public class LOGOCanvas extends JComponent {
 	}
 	
 	public void paint(Graphics g) {
-		turtle.paint(g, this);
-		for (LOGOCommand cmd : turtle.getCommand()) {
-			cmd.draw(g, turtle);
-		}
 		
 	}
 	

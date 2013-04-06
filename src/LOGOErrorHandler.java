@@ -1,7 +1,5 @@
-
 public class LOGOErrorHandler {
 	static LOGOIO io;
-	Exception e;
 	String message;
 	public LOGOErrorHandler(LOGOIO io) {
 		this.io = io;
@@ -9,21 +7,14 @@ public class LOGOErrorHandler {
 	}
 
 	public void reset() {
-		e = null;
 		message = null;
 	}
 
 	public boolean error() {
-		return e != null;
+		return message != null;
 	}
 
-	public void set(Exception e) {
-		this.e = e;
-		message = e.toString();
-	}
-	
-	public void set(Exception e, String message) {
-		this.e = e;
+	public void set(String message) {
 		this.message = message;
 	}
 	
