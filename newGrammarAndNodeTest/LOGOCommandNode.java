@@ -1,44 +1,60 @@
+import java.util.*;
+
 public class LOGOCommandNode extends LOGONode {
 	public LOGOCommandNode(String id) {
 		super(id);
-		System.out.format("new command node no arg");
+		System.out.println("new command node no arg");
 	}
+
 	public LOGOCommandNode(String id, LOGONode... args) {
 		super(id, args);
-		System.out.format("new command node with arg");
+		System.out.println("new command node with arg");
 	}
+
 	public Object run(LOGOErrorHandler e) {
 		int commandID = findCommand(id);	//commandID is the number of arguments taken
-		if (commandID < 0) {
+		if (id.equals("commandList")) {
+			for (LOGONode node : children)
+				if (node != null)
+					node.run(e);
+		} else {
+			if (commandID < 0) {
 				LOGOPP.io.err("invalid command");
 				return null;
+			}
+			if (commandID == 0) {
+				command(id);
+				System.out.println("command received:" + id + " with 0 arguments");
+			} else if (commandID == 1) {
+				command(id, children[0]);
+				System.out.println("command received:" + id + " with 1 arguments");
+			}
 		}
-		if (commandID == 0) {
-				//do void command (id)
-				System.out.format("command received: %s with 0 arguments", id);
-		}
-		else if (commandID == 1) {
-			//do void command (id, children[0])
-			System.out.format("command received: %s with 1 arguments: %s", id, children[0]);
-		}
-		
 		return null;
 	}
 	
-	private static String[][] CommandList = {
-		{"HOME", "CLEARSCREEN", "GETX", "GETY", "GETXY",
-			"SHOWTURTLE", "HIDETURTLE", "WRAP", "FENCE", "PENUP", "PENDOWN"},
-		{"FORWARDD", "BACK", "LEFT", "RIGHT", "SPEED", "SETX", "SETY", "SETXY"}
-	};
+	private final static HashSet<String> CommandList0 = new HashSet<String>(
+					Arrays.asList(new String[] {"HOME", "CLEARSCREEN", 
+							"GETX", "GETY", "GETXY", "SHOWTURTLE", "HIDETURTLE", 
+							"WRAP", "FENCE", "PENUP", "PENDOWN"}));
+	private final static HashSet<String> CommandList1 = new HashSet<String>(
+					Arrays.asList(new String[] {"FORWARD", "BACK", "LEFT", 
+							"RIGHT","SPEED", "SETX", "SETY", "SETXY"}));
 	
 	private int findCommand(String id) {
-		for (int i = 0; i < CommandList.length; i++) {
-			for (int j = 0; j < CommandList[i].length; j++) {
-			if (id.equals(CommandList[i][j]))
-				return i;
-			}
-		}	
+		if (CommandList0.contains(id))
+				return 0;
+		if (CommandList1.contains(id))
+				return 1;
 		return -1;
 	}
-	
+
+	public void command(String id, LOGONode... args) {
+		if (args.length == 0)
+			System.out.println("0 argument command");
+		else if (args.length == 1)
+			System.out.println("1 argument command");
+		else
+			System.out.println(">= 2 arguments");	
+	}	
 }

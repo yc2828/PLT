@@ -1,23 +1,23 @@
 grammar Grammar;
 
 command_list returns [LOGONode node]
-        : command_noarg command_list {$node = new LOGOCommandNode($command_noarg.text);}
-        | command_expr command_list {$node = $command_expr.node;}
-		|
-        ;
+        : command_noarg l=command_list {$node = new LOGOCommandNode("commandList", $command_noarg.node, $l.node);}
+        | command_expr l=command_list {$node = new LOGOCommandNode("commandList",$command_expr.node, $l.node);}
+        | {$node = null;}
+		;
 
-command_noarg returns [String text]
-    :   getx {$text =  $getx.text;}
-    |   gety {$text =  $gety.text;}
-    |   getxy {$text =  $getxy.text;}
-    |   clearscreen {$text =  $clearscreen.text;}
-    |   origin {$text =  $origin.text;}
-    |   showturtle {$text =  $showturtle.text;}
-    |   hideturtle {$text =  $hideturtle.text;}
-    |   wrap {$text =  $wrap.text;}
-    |   fence {$text =  $fence.text;}
-    |   penup {$text =  $penup.text;}
-    |   pendown {$text =  $pendown.text;}
+command_noarg returns [LOGONode node]
+    :   getx {$node =  new LOGOCommandNode($getx.text);}
+    |   gety {$node =  new LOGOCommandNode($gety.text);}
+    |   getxy {$node =  new LOGOCommandNode($getxy.text);}
+    |   clearscreen {$node =  new LOGOCommandNode($clearscreen.text);}
+    |   origin {$node =  new LOGOCommandNode($origin.text);}
+    |   showturtle {$node =  new LOGOCommandNode($showturtle.text);}
+    |   hideturtle {$node =  new LOGOCommandNode($hideturtle.text);}
+    |   wrap {$node =  new LOGOCommandNode($wrap.text);}
+    |   fence {$node =  new LOGOCommandNode($fence.text);}
+    |   penup {$node =  new LOGOCommandNode($penup.text);}
+    |   pendown {$node =  new LOGOCommandNode($pendown.text);}
     ;
     
 command_expr returns [LOGONode node]
@@ -179,4 +179,4 @@ Identifier
 
 WS
         :(' ' | '\t' | '\r'| '\n') -> skip
-        ;
+		;
