@@ -10,6 +10,10 @@ public class LOGOIO {
 		System.out.println(str);
 	}
 
+	public void debug(String str) {
+		System.out.println(str);
+	}
+
 	public void err(String str) {
 		System.err.println(str);
 	}
