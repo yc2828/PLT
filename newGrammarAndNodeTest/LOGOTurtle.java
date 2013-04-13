@@ -1,7 +1,6 @@
 import java.util.*;
 import java.awt.*;
 import java.awt.geom.*;
-
 import javax.swing.*;
 
 public class LOGOTurtle{
@@ -11,9 +10,10 @@ public class LOGOTurtle{
 	
 	// 04-05-13 update:
 	private double speed;
-	private boolean penDown;
+	private boolean penDown = true;
 	//......................(TODO: color penSize)
-
+	private int[] color = new int[] {0, 0, 0}; //{R,G,B}
+	
 	LOGOTurtle() {
 	}
 	
@@ -27,13 +27,19 @@ public class LOGOTurtle{
 	public void setXPos(double x) {xPos = x;}
 	public void setYpos(double y) {yPos = y;}
 	public void setAngle(double a) {angle = a;}
-		
+	
+	public int colorValue() {
+		return int color[0]|color[1]<<8|color[2]<<16;
+	}
 	public void paint(Graphics g, LOGOCanvas canvas) {
+		if (!penDown)
+				return;
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform saveAt = g2.getTransform();
 		AffineTransform at = AffineTransform.getTranslateInstance(xPos, yPos);
 		at.rotate(Math.toRadians(angle + 90));
 		g2.setTransform(at);
+		g2.setComposite(AlphaComposite.SrcAtop.derive(0.2f));//transparent
 		ImageIcon turtleImg = new ImageIcon("logo_turtle.png");
 		g2.drawImage(turtleImg.getImage(), -turtleImg.getIconWidth() / 2, -turtleImg.getIconHeight() / 2,
 				turtleImg.getIconWidth(), turtleImg.getIconHeight(), canvas);
@@ -41,7 +47,7 @@ public class LOGOTurtle{
 	}
 }
 
-class TurtleStatus {
+/*class TurtleStatus {
 	public double xPos;
 	public double yPos;
 	public double angle;
@@ -50,4 +56,4 @@ class TurtleStatus {
 		yPos = y;
 		angle = a;
 	}
-}
+}*/

@@ -8,6 +8,6 @@ public class LOGOInterpreter {
 		GrammarLexer lexer = new GrammarLexer(input);
 		CommonTokenStream tkStream = new CommonTokenStream(lexer);
 		GrammarParser parser = new GrammarParser(tkStream);
-		return parser.command_list().node;
+		return parser.line().node;
 	}
 }
