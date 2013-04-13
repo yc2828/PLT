@@ -29,7 +29,7 @@ public class LOGOTurtle{
 	public void setAngle(double a) {angle = a;}
 	
 	public int colorValue() {
-		return int color[0]|color[1]<<8|color[2]<<16;
+		return color[0]|color[1]<<8|color[2]<<16;
 	}
 	public void paint(Graphics g, LOGOCanvas canvas) {
 		if (!penDown)
