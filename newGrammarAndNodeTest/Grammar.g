@@ -1,5 +1,10 @@
 grammar Grammar;
 
+line returns [LOGONode node]
+		: command_list EOF {$node = $command_list.node;}
+		| expression EOF {$node = $expression.node;}
+		;
+
 command_list returns [LOGONode node]
         : command_noarg l=command_list {$node = new LOGOCommandNode("commandList", $command_noarg.node, $l.node);}
         | command_expr l=command_list {$node = new LOGOCommandNode("commandList",$command_expr.node, $l.node);}
