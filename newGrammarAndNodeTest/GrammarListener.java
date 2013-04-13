@@ -12,6 +12,9 @@ public interface GrammarListener extends ParseTreeListener {
 	void enterAssignment_expression(GrammarParser.Assignment_expressionContext ctx);
 	void exitAssignment_expression(GrammarParser.Assignment_expressionContext ctx);
 
+	void enterLine(GrammarParser.LineContext ctx);
+	void exitLine(GrammarParser.LineContext ctx);
+
 	void enterMultiplicative_expression(GrammarParser.Multiplicative_expressionContext ctx);
 	void exitMultiplicative_expression(GrammarParser.Multiplicative_expressionContext ctx);
 
@@ -36,11 +39,11 @@ public interface GrammarListener extends ParseTreeListener {
 	void enterCommand(GrammarParser.CommandContext ctx);
 	void exitCommand(GrammarParser.CommandContext ctx);
 
-	void enterGety(GrammarParser.GetyContext ctx);
-	void exitGety(GrammarParser.GetyContext ctx);
-
 	void enterLeft(GrammarParser.LeftContext ctx);
 	void exitLeft(GrammarParser.LeftContext ctx);
+
+	void enterGety(GrammarParser.GetyContext ctx);
+	void exitGety(GrammarParser.GetyContext ctx);
 
 	void enterGetx(GrammarParser.GetxContext ctx);
 	void exitGetx(GrammarParser.GetxContext ctx);

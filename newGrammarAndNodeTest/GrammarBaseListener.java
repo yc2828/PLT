@@ -15,6 +15,9 @@ public class GrammarBaseListener implements GrammarListener {
 	@Override public void enterAssignment_expression(GrammarParser.Assignment_expressionContext ctx) { }
 	@Override public void exitAssignment_expression(GrammarParser.Assignment_expressionContext ctx) { }
 
+	@Override public void enterLine(GrammarParser.LineContext ctx) { }
+	@Override public void exitLine(GrammarParser.LineContext ctx) { }
+
 	@Override public void enterMultiplicative_expression(GrammarParser.Multiplicative_expressionContext ctx) { }
 	@Override public void exitMultiplicative_expression(GrammarParser.Multiplicative_expressionContext ctx) { }
 
@@ -39,11 +42,11 @@ public class GrammarBaseListener implements GrammarListener {
 	@Override public void enterCommand(GrammarParser.CommandContext ctx) { }
 	@Override public void exitCommand(GrammarParser.CommandContext ctx) { }
 
-	@Override public void enterGety(GrammarParser.GetyContext ctx) { }
-	@Override public void exitGety(GrammarParser.GetyContext ctx) { }
-
 	@Override public void enterLeft(GrammarParser.LeftContext ctx) { }
 	@Override public void exitLeft(GrammarParser.LeftContext ctx) { }
+
+	@Override public void enterGety(GrammarParser.GetyContext ctx) { }
+	@Override public void exitGety(GrammarParser.GetyContext ctx) { }
 
 	@Override public void enterGetx(GrammarParser.GetxContext ctx) { }
 	@Override public void exitGetx(GrammarParser.GetxContext ctx) { }
