@@ -6,14 +6,14 @@ public class LOGOOperator extends LOGONode{
 	Double runAndCheck(LOGONode node) {
 		Object nodeVal = node.run();
 		if (LOGOPP.errorhandler.error())
-			return 0;
+			return 0.;
 		if (nodeVal == null) {
 			LOGOPP.errorhandler.set("null value");
-			return 0;
+			return 0.;
 		}
 		if (!(nodeVal instanceof Double)) {
 			LOGOPP.errorhandler.set("wrong type");
-			return 0;
+			return 0.;
 		}
 		return (Double) nodeVal;
 	}

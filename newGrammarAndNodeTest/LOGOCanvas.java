@@ -50,6 +50,7 @@ public class LOGOCanvas extends JComponent {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		turtle.paint(g, this);
 	}
 	
 	private String title = "untitled canvas";

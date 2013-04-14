@@ -11,12 +11,12 @@ public class LOGOCommandNode extends LOGONode {
 		System.out.println("new command node with arg");
 	}
 
-	public Object run(LOGOErrorHandler e) {
+	public Object run() {
 		int commandID = findCommand(id);	//commandID is the number of arguments taken
 		if (id.equals("commandList")) {
 			for (LOGONode node : children)
 				if (node != null)
-					node.run(e);
+					node.run();
 		} else {
 			if (commandID < 0) {
 				LOGOPP.io.err("invalid command");
@@ -50,11 +50,40 @@ public class LOGOCommandNode extends LOGONode {
 	}
 
 	public void command(String id, LOGONode... args) {
-		if (args.length == 0)
-			System.out.println("0 argument command");
-		else if (args.length == 1)
-			System.out.println("1 argument command");
-		else
+		if (args.length == 0) {
+			// commands with 0 arguments
+			if (id.equals("CLEARSCREEN"))
+				;//LOGOPP.basic.clearScreen();
+			else if (id.equals("SHOWTURTLE"))
+				;//LOGOPP.basic.showTurtle(true);
+			else if (id.equals("HIDETURTLE"))
+				;//LOGOPP.basic.showTurtle(false);
+			else if (id.equals("WRAP"))
+				;//LOGOPP.basic.wrap("true");
+			else if (id.equals("FENCE"))
+				;//LOGOPP.basic.wrap("false");
+			else if (id.equals("PENUP"))
+				LOGOPP.canvas.turtle.setPenDown(false);
+			else if (id.equals("PENDOWN"))
+				LOGOPP.canvas.turtle.setPenDown(true);
+
+		} else if (args.length == 1) {
+			// command with 1 arguments
+			if (id.equals("FORWARD"))
+				LOGOPP.basic.forward(args[0], true);
+			else if (id.equals("BACK"))
+				LOGOPP.basic.forward(args[0], false);
+			else if (id.equals("LEFT"))
+				LOGOPP.basic.turn(args[0], true);
+			else if (id.equals("RIGHT"))
+				LOGOPP.basic.turn(args[0], false);
+			else if (id.equals("SETX"))
+				LOGOPP.basic.teleport(args[0], true, false);
+			else if (id.equals("SETY"))
+				LOGOPP.basic.teleport(args[0], false, true);
+			else if (id.equals("SETXY"))
+				;//LOGOPP.basic.teleport(args[0], true, true);
+		} else
 			System.out.println(">= 2 arguments");	
 	}	
 }

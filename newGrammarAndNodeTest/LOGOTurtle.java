@@ -4,12 +4,13 @@ import java.awt.geom.*;
 import javax.swing.*;
 
 public class LOGOTurtle{
+	public static final double SPEED_ITR_MAX = 100000.;
 	private double xPos = 0;
 	private double yPos = 0;
 	private double angle = -90;
 	
 	// 04-05-13 update:
-	private double speed;
+	private double speed = 5.;
 	private boolean penDown = true;
 	//......................(TODO: color penSize)
 	private int[] color = new int[] {0, 0, 0}; //{R,G,B}
@@ -24,16 +25,18 @@ public class LOGOTurtle{
 	public double getXPos() {return xPos;}
 	public double getYPos() {return yPos;}
 	public double getAngle() {return angle;}
+	public boolean getPenDown() {return penDown;}
+	public double getSpeed() {return speed;}
 	public void setXPos(double x) {xPos = x;}
-	public void setYpos(double y) {yPos = y;}
+	public void setYPos(double y) {yPos = y;}
 	public void setAngle(double a) {angle = a;}
-	
+	public void setPenDown(boolean p) {penDown = p;}
+	public void setSpeed(double s) {speed = s;}
+
 	public int colorValue() {
 		return color[0]|color[1]<<8|color[2]<<16;
 	}
 	public void paint(Graphics g, LOGOCanvas canvas) {
-		if (!penDown)
-				return;
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform saveAt = g2.getTransform();
 		AffineTransform at = AffineTransform.getTranslateInstance(xPos, yPos);
