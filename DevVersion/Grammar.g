@@ -78,7 +78,7 @@ id returns [LOGONode node]
         ;
 
 assignment_expression returns [LOGONode node]
-        : 'SET' id expression {$node = new LOGOOperatorNode("set", $id.node, $expression.node);}
+        : 'SET' id expression {$node = new LOGOSetNode($id.node.id, $expression.node);}
         ;
 
 catch[RecognitionException e] {throw e;}

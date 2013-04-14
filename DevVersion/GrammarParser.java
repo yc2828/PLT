@@ -977,7 +977,7 @@ public class GrammarParser extends Parser {
 			setState(156); match(1);
 			setState(157); ((Assignment_expressionContext)_localctx).id = id();
 			setState(158); ((Assignment_expressionContext)_localctx).expression = expression();
-			((Assignment_expressionContext)_localctx).node =  new LOGOOperatorNode("set", ((Assignment_expressionContext)_localctx).id.node, ((Assignment_expressionContext)_localctx).expression.node);
+			((Assignment_expressionContext)_localctx).node =  new LOGOSetNode(((Assignment_expressionContext)_localctx).id.node.id, ((Assignment_expressionContext)_localctx).expression.node);
 			}
 		}
 		catch (RecognitionException e) {

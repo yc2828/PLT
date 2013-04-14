@@ -10,6 +10,7 @@ public class LOGOPP extends JFrame {
 	}
 	
 	static LOGOIO io = new LOGOIO();
+	static LOGOSymbolTable symboltable = new LOGOSymbolTable();
 	static LOGOErrorHandler errorhandler = new LOGOErrorHandler(io);
 	static LOGOCanvas canvas = new LOGOCanvas("LOGO++", 800, 600);
 	static LOGOInterpreter interpreter = new LOGOInterpreter();

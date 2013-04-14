@@ -5,21 +5,21 @@ public class LOGOOperatorNode extends LOGONode{
 
 	Double runAndCheck(LOGONode node) {
 		if (LOGOPP.errorhandler.error())
-			return 0.;
+			return null;
 		if (node == null) {
 			LOGOPP.errorhandler.setRunTime(id, "no argument");
-			return 0.;
+			return null;
 		}
 		Object nodeVal = node.run();
 		if (LOGOPP.errorhandler.error())
-			return 0.;
+			return null;
 		if (nodeVal == null) {
 			LOGOPP.errorhandler.setRunTime(id, "null argument");
-			return 0.;
+			return null;
 		}
 		if (!(nodeVal instanceof Double)) {
 			LOGOPP.errorhandler.setRunTime(id, "wrong argument type");
-			return 0.;
+			return null;
 		}
 		return (Double) nodeVal;
 	}
