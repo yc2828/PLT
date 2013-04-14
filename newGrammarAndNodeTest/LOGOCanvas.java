@@ -15,6 +15,9 @@ public class LOGOCanvas extends JComponent {
 	private int width;
 	private int height;	
 
+	public int getWidth() {return width;}
+	public int getHeight() {return height;}
+
 	public LOGOCanvas(String str) {
 		init(str, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
@@ -22,7 +25,13 @@ public class LOGOCanvas extends JComponent {
 	public LOGOCanvas(String str, int w, int h) {
 		init(str, w, h);
 	}
-
+	
+	public void clean() {
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++)
+				bitmap[i][j] = 255|255<<8|255<<16;
+	
+	}
 	private void init(String str, int w, int h) {
 		height = h;
 		width = w;
@@ -30,13 +39,11 @@ public class LOGOCanvas extends JComponent {
 		if (str != null)
 			title = str;
 		bitmap = new int[height][width];
-		for (int i = 0; i < h; i++)
-			for (int j = 0; j < w; j++)
-				bitmap[i][j] = 255|255<<8|255<<16;
+		clean();
 	}
 
 	public void paintPoint(int x, int y) {
-		bitmap[height-y][x] = turtle.colorValue();
+		bitmap[height - y][x] = turtle.colorValue();
 	}
 
 	public void paint(Graphics g) {

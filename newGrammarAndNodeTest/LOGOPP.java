@@ -11,7 +11,7 @@ public class LOGOPP extends JFrame {
 	
 	static LOGOIO io = new LOGOIO();
 	static LOGOErrorHandler errorhandler = new LOGOErrorHandler(io);
-	static LOGOCanvas canvas = new LOGOCanvas("LOGO++");
+	static LOGOCanvas canvas = new LOGOCanvas("LOGO++", 800, 600);
 	static LOGOInterpreter interpreter = new LOGOInterpreter();
 	static LOGOBasic basic = new LOGOBasic();
 
@@ -21,7 +21,7 @@ public class LOGOPP extends JFrame {
 			
 	public LOGOPP() {
 		add("Center", canvas);
-		setSize(canvas.DEFAULT_WIDTH,canvas.DEFAULT_HEIGHT);
+		setSize(canvas.getWidth() ,canvas.getHeight());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		repaint();

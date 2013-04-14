@@ -34,7 +34,7 @@ public class LOGOCommandNode extends LOGONode {
 	}
 	
 	private final static HashSet<String> CommandList0 = new HashSet<String>(
-					Arrays.asList(new String[] {"HOME", "CLEARSCREEN", 
+					Arrays.asList(new String[] {"ORIGIN", "CLEARSCREEN", 
 							"GETX", "GETY", "GETXY", "SHOWTURTLE", "HIDETURTLE", 
 							"WRAP", "FENCE", "PENUP", "PENDOWN"}));
 	private final static HashSet<String> CommandList1 = new HashSet<String>(
@@ -52,8 +52,10 @@ public class LOGOCommandNode extends LOGONode {
 	public void command(String id, LOGONode... args) {
 		if (args.length == 0) {
 			// commands with 0 arguments
-			if (id.equals("CLEARSCREEN"))
-				;//LOGOPP.basic.clearScreen();
+			if (id.equals("ORIGIN"))
+				LOGOPP.basic.origin();
+			else if (id.equals("CLEARSCREEN"))
+				LOGOPP.basic.clearScreen();
 			else if (id.equals("SHOWTURTLE"))
 				;//LOGOPP.basic.showTurtle(true);
 			else if (id.equals("HIDETURTLE"))

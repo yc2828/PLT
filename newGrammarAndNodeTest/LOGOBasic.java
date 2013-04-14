@@ -98,6 +98,18 @@ public class LOGOBasic {
 			}
 		}
 	}
+	
+	public void origin() {
+		moveTurtle((double)LOGOPP.canvas.getWidth() / 2, 
+					(double)LOGOPP.canvas.getHeight() / 2, false);
+		LOGOPP.canvas.turtle.setAngle(LOGOTurtle.INIT_ANGLE);
+		LOGOPP.canvas.repaint();
+	}
+
+	public void clearScreen() {
+		LOGOPP.canvas.clean();
+		origin();
+	}
 
 	/*
 	 * Check LOGONode return value's type

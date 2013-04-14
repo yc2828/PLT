@@ -5,9 +5,10 @@ import javax.swing.*;
 
 public class LOGOTurtle{
 	public static final double SPEED_ITR_MAX = 100000.;
+	public static final double INIT_ANGLE = -90;
 	private double xPos = 0;
 	private double yPos = 0;
-	private double angle = -90;
+	private double angle = INIT_ANGLE;
 	
 	// 04-05-13 update:
 	private double speed = 5.;
