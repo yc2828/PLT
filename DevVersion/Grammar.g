@@ -1,8 +1,8 @@
 grammar Grammar;
 
 line returns [LOGONode node]
-		: command_list EOF {$node = $command_list.node;}
-		| expression EOF {$node = $expression.node;}
+		: command_list EOF {$node = $command_list.node; LOGOPP.io.debug("line->comdlist");}
+		| expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
 		;
 
 command_list returns [LOGONode node]
@@ -42,7 +42,7 @@ command returns [String text]
 	;
 
 expression returns [LOGONode node]
-        : additive_expression {$node = $additive_expression.node;}
+        : additive_expression {$node = $additive_expression.node; LOGOPP.io.debug("expr->additive");}
         ;
 
 primary_expression returns [LOGONode node]
@@ -53,7 +53,7 @@ primary_expression returns [LOGONode node]
 
 unary_expression returns [LOGONode node]
         : primary_expression {$node = $primary_expression.node;}
-        | unary_operator primary_expression {$node = new LOGOOperator("u-", $primary_expression.node);}
+        | unary_operator primary_expression {$node = new LOGOOperatorNode("u-", $primary_expression.node);}
         ;
 
 unary_operator
@@ -62,15 +62,15 @@ unary_operator
 
 multiplicative_expression returns [LOGONode node]
         : unary_expression {$node = $unary_expression.node;}
-        | multiplicative_expression '*' unary_expression {$node = new LOGOOperator("*", $multiplicative_expression.node, $unary_expression.node);}
-        | multiplicative_expression '/' unary_expression {$node = new LOGOOperator("/", $multiplicative_expression.node, $unary_expression.node);}
-        | multiplicative_expression '^' unary_expression {$node = new LOGOOperator("^", $multiplicative_expression.node, $unary_expression.node);}
+        | multiplicative_expression '*' unary_expression {$node = new LOGOOperatorNode("*", $multiplicative_expression.node, $unary_expression.node);}
+        | multiplicative_expression '/' unary_expression {$node = new LOGOOperatorNode("/", $multiplicative_expression.node, $unary_expression.node);}
+        | multiplicative_expression '^' unary_expression {$node = new LOGOOperatorNode("^", $multiplicative_expression.node, $unary_expression.node);}
         ;
 
 additive_expression returns [LOGONode node]
         : multiplicative_expression {$node = $multiplicative_expression.node;}
-        | additive_expression '+' multiplicative_expression {$node = new LOGOOperator("+", $additive_expression.node, $multiplicative_expression.node);}
-        | additive_expression '-' multiplicative_expression {$node = new LOGOOperator("-", $additive_expression.node, $multiplicative_expression.node);}
+        | additive_expression '+' multiplicative_expression {$node = new LOGOOperatorNode("+", $additive_expression.node, $multiplicative_expression.node); LOGOPP.io.debug("parser +: " + $additive_expression.node.id + " " + $multiplicative_expression.node.id);}
+        | additive_expression '-' multiplicative_expression {$node = new LOGOOperatorNode("-", $additive_expression.node, $multiplicative_expression.node);}
         ;
 
 id returns [LOGONode node]
@@ -78,7 +78,7 @@ id returns [LOGONode node]
         ;
 
 assignment_expression returns [LOGONode node]
-        : 'SET' id expression {$node = new LOGOOperator("set", $id.node, $expression.node);}
+        : 'SET' id expression {$node = new LOGOOperatorNode("set", $id.node, $expression.node);}
         ;
 
 catch[RecognitionException e] {throw e;}

@@ -42,7 +42,9 @@ public class LOGOPP extends JFrame {
 	public void execute(String str) {
 		errorhandler.reset();
 		try {
+			io.debug("parse");
 			LOGONode root = interpreter.parse(str);
+			io.debug("run");
 			root.run();
 		}
 		catch (Exception e) {

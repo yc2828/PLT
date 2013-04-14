@@ -8,10 +8,13 @@ public class LOGOLeaf extends LOGONode{
 			LOGOPP.io.debug("is Double");
 			return Double.parseDouble(id);
 		}
-		else {
+		else if (id.charAt(0) == '"') {
 			LOGOPP.io.debug("is String");
 			return id;
 		}
+		else {
+			LOGOPP.io.debug("is ID");
+			return id;
+		}
 	}
-
 }

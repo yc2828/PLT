@@ -14,6 +14,10 @@ public class LOGOErrorHandler {
 		return message != null;
 	}
 
+	public void setRunTime(String id, String message) {
+		set("Runtime Error: " + id + ": " + message);
+	}
+
 	public void set(String message) {
 		this.message = message;
 	}
