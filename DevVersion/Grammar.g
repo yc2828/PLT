@@ -9,7 +9,8 @@ line returns [LOGONode node]
 command_list returns [LOGONode node]
         : command_noarg l=command_list {$node = new LOGOCommandNode("commandList", $command_noarg.node, $l.node);}
         | command_expr l=command_list {$node = new LOGOCommandNode("commandList",$command_expr.node, $l.node);}
-        | {$node = null;}
+        | command_noarg {$node = $command_noarg.node;}
+		| command_expr {$node = $command_expr.node;}
 		;
 
 command_noarg returns [LOGONode node]
