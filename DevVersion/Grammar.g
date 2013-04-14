@@ -1,8 +1,9 @@
 grammar Grammar;
 
 line returns [LOGONode node]
-		: command_list EOF {$node = $command_list.node; LOGOPP.io.debug("line->comdlist");}
-		| expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
+		: expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
+		| command_list EOF {$node = $command_list.node; LOGOPP.io.debug("line->comdlist");}
+
 		;
 
 command_list returns [LOGONode node]
@@ -46,14 +47,15 @@ expression returns [LOGONode node]
         ;
 
 primary_expression returns [LOGONode node]
-        : Number {$node = new LOGOLeaf($Number.text);}
-        | '(' expression ')' {$node = $expression.node;}
-        | assignment_expression {$node = $assignment_expression.node;}
+        : Number {$node = new LOGOLeaf($Number.text); LOGOPP.io.debug("Number " + $node.id);}
+        | '(' expression ')' {$node = $expression.node; LOGOPP.io.debug("parentheses");}
+        | assignment_expression {$node = $assignment_expression.node; LOGOPP.io.debug("SET");}
+        | id {$node = $id.node; LOGOPP.io.debug("ID");}
         ;
 
 unary_expression returns [LOGONode node]
-        : primary_expression {$node = $primary_expression.node;}
-        | unary_operator primary_expression {$node = new LOGOOperatorNode("u-", $primary_expression.node);}
+        : primary_expression {$node = $primary_expression.node; LOGOPP.io.debug("unary->primary " + $node.id);}
+        | unary_operator primary_expression {$node = new LOGOOperatorNode("u-", $primary_expression.node); LOGOPP.io.debug("unary->primary " + $node.id);}
         ;
 
 unary_operator
@@ -61,20 +63,20 @@ unary_operator
         ;
 
 multiplicative_expression returns [LOGONode node]
-        : unary_expression {$node = $unary_expression.node;}
-        | multiplicative_expression '*' unary_expression {$node = new LOGOOperatorNode("*", $multiplicative_expression.node, $unary_expression.node);}
-        | multiplicative_expression '/' unary_expression {$node = new LOGOOperatorNode("/", $multiplicative_expression.node, $unary_expression.node);}
-        | multiplicative_expression '^' unary_expression {$node = new LOGOOperatorNode("^", $multiplicative_expression.node, $unary_expression.node);}
+        : n=multiplicative_expression '*' unary_expression {$node = new LOGOOperatorNode("*", $n.node, $unary_expression.node); LOGOPP.io.debug("mul->mul*unary " + $node.id);}
+        | n=multiplicative_expression '/' unary_expression {$node = new LOGOOperatorNode("/", $n.node, $unary_expression.node); LOGOPP.io.debug("mul->mul/unary " + $node.id);}
+        | n=multiplicative_expression '^' unary_expression {$node = new LOGOOperatorNode("^", $n.node, $unary_expression.node); LOGOPP.io.debug("mul->mul^unary " + $node.id);}
+        | unary_expression {$node = $unary_expression.node; LOGOPP.io.debug("mul->unary " + $node.id);}
         ;
 
 additive_expression returns [LOGONode node]
-        : multiplicative_expression {$node = $multiplicative_expression.node;}
-        | additive_expression '+' multiplicative_expression {$node = new LOGOOperatorNode("+", $additive_expression.node, $multiplicative_expression.node); LOGOPP.io.debug("parser +: " + $additive_expression.node.id + " " + $multiplicative_expression.node.id);}
-        | additive_expression '-' multiplicative_expression {$node = new LOGOOperatorNode("-", $additive_expression.node, $multiplicative_expression.node);}
+        : n=additive_expression '+' multiplicative_expression {$node = new LOGOOperatorNode("+", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add+mul " + $node.id);}
+        | n=additive_expression '-' multiplicative_expression {$node = new LOGOOperatorNode("-", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add-mul " + $node.id);}
+        | multiplicative_expression {$node = $multiplicative_expression.node; LOGOPP.io.debug("add->mul " + $node.id);}
         ;
 
 id returns [LOGONode node]
-        :Identifier {$node = new LOGOLeaf($Identifier.text);}
+        : Identifier {$node = new LOGOLeaf($Identifier.text);}
         ;
 
 assignment_expression returns [LOGONode node]

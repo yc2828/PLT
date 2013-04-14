@@ -5,8 +5,9 @@ public class LOGONode {
 		this.id = id;
 		children = args;
 		LOGOPP.io.debug(id);
-		for (LOGONode node : children)
+		for (LOGONode node : children) {
 			LOGOPP.io.debug("child: " + node.id);
+		}
 	}
 	public Object run() {
 		return null;

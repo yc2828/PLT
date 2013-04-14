@@ -14,7 +14,9 @@ public class LOGOLeaf extends LOGONode{
 		}
 		else {
 			LOGOPP.io.debug("is ID");
-			return id;
+			Object ret = LOGOPP.symboltable.get(id);
+			LOGOPP.io.debug("value " + ret.toString());
+			return ret;
 		}
 	}
 }

@@ -30,13 +30,13 @@ public class LOGOPP extends JFrame {
 	
 	public void run () {
 		String str = new String("init");
-		while (!str.equals("exit") && !errorhandler.error()) {
+		while (!str.equals("exit")) {
 			str = io.in();
 			execute(str);
 			canvas.repaint();
+			if (errorhandler.error())
+				errorhandler.errorOut();
 		}
-		if (errorhandler.error())
-			errorhandler.errorOut();
 		io.out("END");
 	}
 
