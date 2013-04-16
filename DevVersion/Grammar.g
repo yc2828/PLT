@@ -1,5 +1,9 @@
 grammar Grammar;
 
+tokens {
+  If, Else
+}
+
 line returns [LOGONode node]
 		: conditional_statement EOF
 		| expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
