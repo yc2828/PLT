@@ -1,9 +1,9 @@
 grammar Grammar;
 
 line returns [LOGONode node]
-		: expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
+		: conditional_statement EOF
+		| expression EOF {$node = $expression.node; LOGOPP.io.debug("line->expr");}
 		| command_list EOF {$node = $command_list.node; LOGOPP.io.debug("line->comdlist");}
-
 		;
 
 command_list returns [LOGONode node]
@@ -19,12 +19,12 @@ command_noarg returns [LOGONode node]
     |   Getxy {$node =  new LOGOCommandNode("GETXY");}
     |   Clearscreen {$node =  new LOGOCommandNode("CLEARSCREEN");}
     |   Origin {$node =  new LOGOCommandNode("ORIGIN");}
-    |	Wrap
-    |	Fence
-    |	Penup
-    |	Pendown
-    |	Showturtle
-    |	Hideturtle
+    |	Wrap {$node =  new LOGOCommandNode("WRAP");}
+    |	Fence {$node =  new LOGOCommandNode("FENCE");}
+    |	Penup {$node =  new LOGOCommandNode("PENUP");}
+    |	Pendown {$node =  new LOGOCommandNode("PENDOWN");}
+    |	Showturtle {$node =  new LOGOCommandNode("SHOWTURTLE");}
+    |	Hideturtle {$node =  new LOGOCommandNode("HIDETURTLE");}
     ;
     
 command_expr returns [LOGONode node]
@@ -36,31 +36,45 @@ command returns [String text]
 	|	Back {$text = new String("BACK");}
 	|	Left {$text = new String("LEFT");}
 	|	Right {$text = new String("RIGHT");}
-	|	Setx
-    |	Sety
-    |	Setxy
-    |	Speed
-    |	Print
+	|	Setx {$text = new String("SETX");}
+    |	Sety {$text = new String("SETY");}
+    |	Setxy {$text = new String("SETXY");}
+    |	Speed {$text = new String("SPEED");}
+    |	Print {$text = new String("PRINT");}
 	;
 
 expression returns [LOGONode node]
-        : additive_expression {$node = $additive_expression.node; LOGOPP.io.debug("expr->additive");}
+        : or_expression {$node = $or_expression.node; LOGOPP.io.debug("expr->or");}
         ;
 
-primary_expression returns [LOGONode node]
-        : Number {$node = new LOGOLeaf($Number.text); LOGOPP.io.debug("Number " + $node.id);}
-        | '(' expression ')' {$node = $expression.node; LOGOPP.io.debug("parentheses");}
-        | assignment_expression {$node = $assignment_expression.node; LOGOPP.io.debug("SET");}
-        | id {$node = $id.node; LOGOPP.io.debug("ID");}
+or_expression returns [LOGONode node]
+        : and_expression
+        | or_expression '||' and_expression
         ;
 
-unary_expression returns [LOGONode node]
-        : primary_expression {$node = $primary_expression.node; LOGOPP.io.debug("unary->primary " + $node.id);}
-        | unary_operator primary_expression {$node = new LOGOOperatorNode("u-", $primary_expression.node); LOGOPP.io.debug("unary->primary " + $node.id);}
+and_expression returns [LOGONode node]
+        : equality_expression
+        | and_expression '&&' equality_expression
         ;
 
-unary_operator
-        : '-'
+equality_expression returns [LOGONode node]
+        : relational_expression
+        | equality_expression '=' relational_expression
+        | equality_expression '!=' relational_expression
+        ;
+
+relational_expression returns [LOGONode node]
+        : additive_expression
+        | relational_expression '<' additive_expression
+        | relational_expression '>' additive_expression
+        | relational_expression '>=' additive_expression
+        | relational_expression '<=' additive_expression
+        ;
+
+additive_expression returns [LOGONode node]
+        : n=additive_expression '+' multiplicative_expression {$node = new LOGOOperatorNode("+", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add+mul " + $node.id);}
+        | n=additive_expression '-' multiplicative_expression {$node = new LOGOOperatorNode("-", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add-mul " + $node.id);}
+        | multiplicative_expression {$node = $multiplicative_expression.node; LOGOPP.io.debug("add->mul " + $node.id);}
         ;
 
 multiplicative_expression returns [LOGONode node]
@@ -70,10 +84,16 @@ multiplicative_expression returns [LOGONode node]
         | unary_expression {$node = $unary_expression.node; LOGOPP.io.debug("mul->unary " + $node.id);}
         ;
 
-additive_expression returns [LOGONode node]
-        : n=additive_expression '+' multiplicative_expression {$node = new LOGOOperatorNode("+", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add+mul " + $node.id);}
-        | n=additive_expression '-' multiplicative_expression {$node = new LOGOOperatorNode("-", $n.node, $multiplicative_expression.node); LOGOPP.io.debug("add->add-mul " + $node.id);}
-        | multiplicative_expression {$node = $multiplicative_expression.node; LOGOPP.io.debug("add->mul " + $node.id);}
+unary_expression returns [LOGONode node]
+        : primary_expression {$node = $primary_expression.node; LOGOPP.io.debug("unary->primary " + $node.id);}
+        | Unary_operator primary_expression {$node = new LOGOOperatorNode("u-", $primary_expression.node); LOGOPP.io.debug("unary->primary " + $node.id);}
+        ;
+        
+primary_expression returns [LOGONode node]
+        : Number {$node = new LOGOLeaf($Number.text); LOGOPP.io.debug("Number " + $node.id);}
+        | '(' expression ')' {$node = $expression.node; LOGOPP.io.debug("parentheses");}
+        | assignment_expression {$node = $assignment_expression.node; LOGOPP.io.debug("SET");}
+        | id {$node = $id.node; LOGOPP.io.debug("ID");}
         ;
 
 id returns [LOGONode node]
@@ -81,10 +101,19 @@ id returns [LOGONode node]
         ;
 
 assignment_expression returns [LOGONode node]
-        : 'SET' id expression {$node = new LOGOSetNode($id.node.id, $expression.node);}
+        : Set id expression {$node = new LOGOSetNode($id.node.id, $expression.node);}
         ;
 
+conditional_statement returns [LOGONode node]
+		: If LPARAN expression RPARAN LBRACKET command_list RBRACKET
+		| If LPARAN expression RPARAN LBRACKET command_list RBRACKET Else LBRACKET command_list RBRACKET
+		;
+
 catch[RecognitionException e] {throw e;}
+
+Unary_operator
+        : '-'
+        ;
 
 Forward
 		: ('Forward ' | 'FORWARD ' | 'FD ')
@@ -164,6 +193,34 @@ Hideturtle
 
 Showturtle
 		: ('Showturtle' | 'SHOWTURTLE' |'ST')
+		;
+		
+Set
+		: ('Set' | 'Set' | 'set')
+		;
+		
+If
+		: 'if'
+		;
+
+Else
+		: 'else'
+		;
+
+LPARAN
+		: '('
+		;
+
+RPARAN
+		: ')'
+		;
+
+LBRACKET
+		: '['
+		;
+
+RBRACKET
+		: ']'
 		;
 
 Number
